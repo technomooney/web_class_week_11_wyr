@@ -1,15 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Would you rather......</h1>
+
+  <would-you-rather v-bind:question="wyrQuestion"
+  v-bind:answer1="wyrAnswer1"
+  v-bind:answer2="wyrAnswer2"
+  v-on:answer-changed="answerChanged"
+  ></would-you-rather>
+
+  <p> {{userSelectedMessage}}</p>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import WouldYouRather from './components/WouldYouRather.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    WouldYouRather
+  },
+  data() {
+    return {
+      wyrQuestion:"Would you rather be too hot or too cold?",
+      wyrAnswer1:"Too hot",
+      wyrAnswer2:"Too cold",
+      userSelectedMessage:""
+    }
+  },
+  methods: {
+    answerChanged(choice) {
+      this.userSelectedMessage = `Thanks you selected \"${choice}\"`
+    }
   }
 }
 </script>
