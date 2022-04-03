@@ -1,23 +1,20 @@
 <template>
   <div class="wyr">
-    <h2>Please make your choice.... </h2>
+    <h2>Would you rather.... </h2>
 
-    <h3> {{ question }}</h3>
+    <h3> {{ question.wyrQuestion }}</h3>
 
-    <input type="radio" id="a1" v-bind:value="answer1" v-model="choice" v-on:change="choiceMade">
-    <label for="a1">{{answer1}}</label>
-    <input type="radio" id="a2" v-bind:value="answer2" v-model="choice" v-on:change="choiceMade">
-    <label for="a2">{{answer2}}</label>
+    <input v-bind:id="a1" name="radio1" type="radio"  v-bind:value="question.wyrAnswer1" v-model="choice" v-on:change="choiceMade">
+    <label v-bind:for="a1" >{{question.wyrAnswer1}}</label>
+    <input v-bind:id="a2" type="radio" v-bind:value="question.wyrAnswer2" v-model="choice" v-on:change="choiceMade">
+    <label v-bind:for="a2">{{question.wyrAnswer2}}</label>
   </div>
 </template>
 
 <script>
 export default {
   name: 'WouldYouRather',
-  props: {
-    question:String,
-    answer1:String,
-    answer2:String
+  props: {question:Object
   },
   data() {
     return {
@@ -26,7 +23,15 @@ export default {
   },
   methods: {
     choiceMade() {
-      this.$emit("answer-changed", this.choice)
+      this.$emit("answer-changed", this.choice,this.question.id)
+    }
+  },
+  computed: {
+    a1() {
+      return this.question.id
+    },
+    a2() {
+      return this.question.id - (this.question.id * 2)
     }
   }
 }
@@ -38,7 +43,10 @@ h3 {
   margin: 40px 0 0;
 }
 .wyr {
+  max-width: 75%;
   border: black 2px dashed;
-
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(darkseagreen,darkcyan);
 }
 </style>
